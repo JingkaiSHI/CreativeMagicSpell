@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.outlook.shi_jing_kai;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
