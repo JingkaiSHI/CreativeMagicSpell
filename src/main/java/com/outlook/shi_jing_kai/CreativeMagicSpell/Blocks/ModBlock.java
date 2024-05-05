@@ -2,9 +2,13 @@ package com.outlook.shi_jing_kai.CreativeMagicSpell.Blocks;
 
 import com.outlook.shi_jing_kai.CreativeMagicSpell.CreativeMagicSpellMod;
 import com.outlook.shi_jing_kai.CreativeMagicSpell.Items.ModItem;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +25,9 @@ public class ModBlock {
     // 2. ensure the block's texture is properly setup with size compatible to resolution
     // 3. ensure test defined in test package's block section is passing
 
+    public static final RegistryObject<Block> MANA_CRYSTAL_ORE = registerBlock("mana_crystal_ore",
+            () -> new DropExperienceBlock(UniformInt.of(3, 6), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
+                                .strength(2f).requiresCorrectToolForDrops()));
 
     // location to define custom blocks - ending
 
