@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "creativemagicmod:block/mana_crystal_ore"
+  }
+}

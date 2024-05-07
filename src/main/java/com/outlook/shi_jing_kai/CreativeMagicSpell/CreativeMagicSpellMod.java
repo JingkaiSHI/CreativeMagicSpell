@@ -3,6 +3,7 @@ package com.outlook.shi_jing_kai.CreativeMagicSpell;
 import com.mojang.logging.LogUtils;
 import com.outlook.shi_jing_kai.CreativeMagicSpell.Blocks.ModBlock;
 import com.outlook.shi_jing_kai.CreativeMagicSpell.Items.ModItem;
+import com.outlook.shi_jing_kai.CreativeMagicSpell.Tabs.ModCreativeModTabs;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -20,6 +21,8 @@ public class CreativeMagicSpellMod {
     // Register all add-on classes in this mod
     public CreativeMagicSpellMod(){
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModCreativeModTabs.register(modEventBus);
 
         ModItem.register(modEventBus);
         ModBlock.register(modEventBus);
