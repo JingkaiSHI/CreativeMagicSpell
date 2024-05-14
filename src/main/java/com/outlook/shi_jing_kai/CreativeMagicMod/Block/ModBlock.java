@@ -26,9 +26,10 @@ public class ModBlock {
     // 3. ensure test defined in test package's block section is passing
 
     public static final RegistryObject<Block> MANA_CRYSTAL_ORE = registerBlock("mana_crystal_ore",
-            () -> new DropExperienceBlock(BlockBehaviour.Properties.of()
-                                .strength(3.0f, 3.0f)
-                                .requiresCorrectToolForDrops()));
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(2f)
+                    .requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
+
 
 
     // location to define custom blocks - ending
