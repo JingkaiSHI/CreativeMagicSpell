@@ -1,3 +1,8 @@
 {
-  "block.creativemagicmod.mana_crystal_ore": "Mana Crystal Ore"
+  "block.creativemagicmod.mana_crystal_ore": "Mana Crystal Ore",
+
+  "creativetab.magical_tab": "Creative Magic Spell",
+
+  "message.creativemagicmod.expand_mana": "You feel your magic power resonate with the crystal... stronger and stronger",
+  "message.creativemagicmod.max_mana_reached": "Your body rejected the crystal, it seems it is a limit for now......"
 }
