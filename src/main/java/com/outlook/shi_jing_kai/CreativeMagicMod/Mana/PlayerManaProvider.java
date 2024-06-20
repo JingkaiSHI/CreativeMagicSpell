@@ -47,4 +47,9 @@ public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable
         createPlayerMana().loadNBTData(nbt);
 
     }
+
+    // Properly invalidate the optional to avoid memory leaks
+    public void invalidate() {
+        optional.invalidate();
+    }
 }
