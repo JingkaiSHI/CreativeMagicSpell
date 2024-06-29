@@ -14,10 +14,12 @@ import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
 import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 
 public class manaCommand {
+    // define client side command for testing client side code for mana usage
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
         dispatcher.register(Commands.literal("mana")
                 .then(Commands.literal("give").then(Commands.argument("amount", integer()).executes(manaCommand::giveMana)))
-                .then(Commands.literal("show").executes(manaCommand::showMana)));
+                .then(Commands.literal("show").executes(manaCommand::showMana))
+                .then(Commands.literal("use").then(Commands.argument("amount", integer()).executes(manaCommand::useMana))));
     }
 
     // give some amount of mana as specified by the command to the specified player
@@ -48,6 +50,10 @@ public class manaCommand {
                 player.sendSystemMessage(Component.literal(String.valueOf(cur_max_mana)));
             }
         }
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int useMana(CommandContext<CommandSourceStack> context){
         return Command.SINGLE_SUCCESS;
     }
 }
