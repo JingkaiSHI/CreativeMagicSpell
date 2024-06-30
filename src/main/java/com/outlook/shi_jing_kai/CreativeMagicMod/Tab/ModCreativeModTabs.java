@@ -2,6 +2,7 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.Tab;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlock;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.ModItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,7 +20,11 @@ public class ModCreativeModTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlock.MANA_CRYSTAL_ORE.get()))
                     .title(Component.translatable("creativetab.magical_tab"))
                     .displayItems((pParameters, pOutput) -> {
+                        // register the blocks into the tab
                         pOutput.accept(ModBlock.MANA_CRYSTAL_ORE.get());
+
+                        // register the items into the tab
+                        pOutput.accept(ModItem.MANA_CRYSTAL.get());
 
                     })
                     .build());
