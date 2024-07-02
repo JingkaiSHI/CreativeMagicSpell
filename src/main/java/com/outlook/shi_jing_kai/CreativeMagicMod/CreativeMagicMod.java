@@ -7,14 +7,17 @@ import com.outlook.shi_jing_kai.CreativeMagicMod.Item.ModItem;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Tab.ModCreativeModTabs;
 import com.outlook.shi_jing_kai.CreativeMagicMod.command.manaCommand;
 import com.outlook.shi_jing_kai.CreativeMagicMod.event.ModEvents;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.ModMessages;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -38,6 +41,15 @@ public class CreativeMagicMod
         ModBlock.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(new ModEvents());
+
+        //modEventBus.addListener(this::commonSetup);
+
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event){
+        event.enqueueWork(() -> {
+            ModMessages.register();
+        });
     }
 
     @Mod.EventBusSubscriber(modid = "creativemagicmod", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
