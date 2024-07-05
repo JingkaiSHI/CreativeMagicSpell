@@ -1,8 +1,10 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.event;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Client.PlayerDataStorage;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,7 +38,9 @@ public class ManaRegenHandler {
             // regenerate mana
             if(mana.getMana() < mana.getMaxMana()){
                 mana.addMana(1);
-                //ModMessages.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new SyncManaC2SPacket(mana.getMana(), mana.getMaxMana()));
+                CompoundTag updatedData = new CompoundTag();
+                mana.saveNBTData(updatedData);
+                PlayerDataStorage.savePlayerData(player.getUUID(), updatedData);
             }
         }
 

@@ -3,6 +3,7 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.event;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Client.PlayerDataStorage;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Client.hud.ManaHudElement;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.ModMessages;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaS2CPacket;
@@ -40,16 +41,12 @@ public class ModEvents {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         if (event.isWasDeath()) {
             System.out.println("Player death detected, syncing mana capability");
-
-            event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldMana -> {
-                System.out.println("Original player Capability found, current mana: " + oldMana.getMana());
-            });
-            event.getOriginal().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(oldMana -> {
-                System.out.println("attempting to sync previous player's mana data..." + oldMana);
-                event.getEntity().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newMana -> {
-                    newMana.copyFrom(oldMana);
-                    System.out.println("Player mana copied from old instance");
-                });
+            System.out.println("attempting to sync previous player's mana data...");
+            PlayerMana oldMana = new PlayerMana();
+            oldMana.loadNBTData((PlayerDataStorage.loadPlayerData(event.getEntity().getUUID())));
+            event.getEntity().getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(newMana -> {
+                newMana.copyFrom(oldMana);
+                System.out.println("Player mana copied from old instance");
             });
             syncManaDataWithClient(event.getEntity());
         }

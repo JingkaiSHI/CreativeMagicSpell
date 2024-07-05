@@ -1,7 +1,9 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Client.PlayerDataStorage;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -28,7 +30,10 @@ public class ManaCrystal extends Item {
         ///////////////// debugging part //////////////////
         int addition_status = 3;
         if(currentPlayerMana != null){
+            CompoundTag updatedData = new CompoundTag();
             addition_status = currentPlayerMana.increaseMaxMana(100);
+            currentPlayerMana.saveNBTData(updatedData);
+            PlayerDataStorage.savePlayerData(pPlayer.getUUID(), updatedData);
         }
         if(!pLevel.isClientSide){
             System.out.println("Server side execution");

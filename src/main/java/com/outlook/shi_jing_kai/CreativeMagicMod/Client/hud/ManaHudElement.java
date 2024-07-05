@@ -59,7 +59,7 @@ public class ManaHudElement implements IGuiOverlay {
                 // set current player's mana to max to visualize effect (shouldn't be any as haven't done artwork to visualize the change)
 
                 switch(phase){
-                    case 0:
+                    case 1:
                         u = PHASE2_U;
                         v = PHASE2_V;
                         x = PHASE2_X;
