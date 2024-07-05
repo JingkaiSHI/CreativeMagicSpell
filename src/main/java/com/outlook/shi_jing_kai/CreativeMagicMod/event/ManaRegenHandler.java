@@ -3,16 +3,10 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.event;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
-import com.outlook.shi_jing_kai.CreativeMagicMod.networking.ModMessages;
-import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaC2SPacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = CreativeMagicMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ManaRegenHandler {

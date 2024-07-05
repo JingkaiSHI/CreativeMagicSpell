@@ -10,7 +10,6 @@ import com.outlook.shi_jing_kai.CreativeMagicMod.event.ModEvents;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.ModMessages;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,6 +22,7 @@ import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(CreativeMagicMod.MOD_ID)
+@Mod.EventBusSubscriber(modid = CreativeMagicMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CreativeMagicMod
 {
     // Define mod id in a common place for everything to reference
@@ -42,15 +42,13 @@ public class CreativeMagicMod
 
         MinecraftForge.EVENT_BUS.register(new ModEvents());
 
-        //modEventBus.addListener(this::commonSetup);
-
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event){
-        event.enqueueWork(() -> {
-            ModMessages.register();
-        });
+    @SubscribeEvent
+    public static void onCommonSetup(FMLCommonSetupEvent event){
+        ModMessages.registerPackets();
     }
+
 
     @Mod.EventBusSubscriber(modid = "creativemagicmod", bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
     public static class ClientModEvents {

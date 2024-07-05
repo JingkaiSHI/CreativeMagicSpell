@@ -1,7 +1,7 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.networking;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
-import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaC2SPacket;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaS2CPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -9,32 +9,27 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-import static net.minecraftforge.network.NetworkRegistry.*;
-
 public class ModMessages {
-    public static SimpleChannel INSTANCE;
 
-    private static int packetId = 0;
-    private static int id() {
-        return packetId++;
-    }
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(CreativeMagicMod.MOD_ID, "main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
 
-    public static void register() {
-        SimpleChannel net = ChannelBuilder
-                .named(new ResourceLocation(CreativeMagicMod.MOD_ID, "messages"))
-                .networkProtocolVersion(() -> "1.0")
-                .clientAcceptedVersions(s -> true)
-                .serverAcceptedVersions(s -> true)
-                .simpleChannel();
 
-        INSTANCE = net;
+
+    public static void registerPackets() {
+        int id = 0;
 
         // add new messages here!
 
-        net.messageBuilder(SyncManaC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(SyncManaC2SPacket::decode)
-                .encoder(SyncManaC2SPacket::encode)
-                .consumerMainThread(SyncManaC2SPacket::handle)
+        INSTANCE.messageBuilder(SyncManaS2CPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncManaS2CPacket::decode)
+                .encoder(SyncManaS2CPacket::encode)
+                .consumerMainThread(SyncManaS2CPacket::handle)
                 .add();
     }
 
@@ -42,11 +37,8 @@ public class ModMessages {
         INSTANCE.sendToServer(message);
     }
 
-    public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
+    public static void sendToClient(Object message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 
-    public static <MSG> void sendToClients(MSG message) {
-        INSTANCE.send(PacketDistributor.ALL.noArg(), message);
-    }
 }

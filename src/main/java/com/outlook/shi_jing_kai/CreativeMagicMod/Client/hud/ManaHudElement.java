@@ -18,7 +18,6 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 @OnlyIn(Dist.CLIENT)
 public class ManaHudElement implements IGuiOverlay {
 
-    // TODO: Remember to replace this current texture by the new drawn mana_bar.png
     private static final ResourceLocation MANA_BAR_TEXTURE = new ResourceLocation(CreativeMagicMod.MOD_ID, "textures/gui/mana_bar.png");
     private static final int MANA_BAR_WIDTH = 160;
     private static final int MANA_BAR_HEIGHT = 10;
@@ -60,7 +59,7 @@ public class ManaHudElement implements IGuiOverlay {
                 // set current player's mana to max to visualize effect (shouldn't be any as haven't done artwork to visualize the change)
 
                 switch(phase){
-                    case 1:
+                    case 0:
                         u = PHASE2_U;
                         v = PHASE2_V;
                         x = PHASE2_X;
