@@ -15,11 +15,11 @@ public class PlayerMana {
 
     // max mana available to be increased to
     // Phase 1 - Overworld
-    private final int MAX_MANA_FINAL_OVERWORLD = 1000;
+    public final int MAX_MANA_FINAL_OVERWORLD = 1000;
     // Phase 2 - Nether
-    private final int MAX_MANA_FINAL_NETHER = 5000;
+    public final int MAX_MANA_FINAL_NETHER = 5000;
     // Phase 3 - the End
-    private final int MAX_MANA_FINAL_END = 20000;
+    public final int MAX_MANA_FINAL_END = 20000;
 
     private int COOL_DOWN_TIMER = 5;
     private int MAX_MANA_FINAL_CURRENT = MAX_MANA_FINAL_OVERWORLD;
@@ -112,7 +112,7 @@ public class PlayerMana {
     public int increaseMaxMana(int increase) {
         int status = 1;
         this.MAX_MANA_CURRENT = Math.min(MAX_MANA_CURRENT + increase, MAX_MANA_FINAL_CURRENT);
-        if(MAX_MANA_CURRENT + increase >= MAX_MANA_FINAL_CURRENT){
+        if(MAX_MANA_CURRENT + increase > MAX_MANA_FINAL_CURRENT){
             status = 0;
         }
         return status;
@@ -124,5 +124,9 @@ public class PlayerMana {
 
     public void setCooldownTimer(int time){
         this.COOL_DOWN_TIMER = time;
+    }
+
+    public void setPhase(int phase){
+        this.phase = phase;
     }
 }
