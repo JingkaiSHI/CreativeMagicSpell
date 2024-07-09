@@ -30,6 +30,9 @@ public class ModBlock {
                     .strength(2f)
                     .requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
+    public static final RegistryObject<Block> MAGIC_CREATION_STATION = registerBlock("magic_creation_station",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
+
 
 
     // location to define custom blocks - ending

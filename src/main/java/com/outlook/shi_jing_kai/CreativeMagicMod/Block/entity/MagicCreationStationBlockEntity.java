@@ -9,6 +9,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.internal.TextComponentMessageFormatHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class MagicCreationStationBlockEntity extends BlockEntity implements MenuProvider {
@@ -18,7 +19,7 @@ public class MagicCreationStationBlockEntity extends BlockEntity implements Menu
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.literal("Magic Creation Altar");
     }
 
     @Nullable
