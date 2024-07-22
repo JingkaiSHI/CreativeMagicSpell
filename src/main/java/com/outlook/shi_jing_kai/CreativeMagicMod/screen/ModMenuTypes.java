@@ -12,8 +12,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, CreativeMagicMod.MOD_ID);
 
-    public static final RegistryObject<MenuType<MagicCreationMenu>> MAGIC_CREATION_MENU = registerMenuType("magic_creation_menu", (IContainerFactory<MagicCreationMenu>) MagicCreationMenu::new);
-
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory){
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }
