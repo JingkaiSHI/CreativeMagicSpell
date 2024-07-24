@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "creativemagicmod:block/magic_creation_station"
+  }
+}

@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,10 +25,15 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class MagicCreationStationBlock extends BaseEntityBlock {
-    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
+
+    // New property 'LEVEL' will determine whether the station to be opened with specific elements available for strokes
+    // LEVEL = 0: default state, access to all normal elements: wind, water, thunder, plant, ice, fire, earth
+    // LEVEL = 1: advanced state, access to all elements in LEVEL = 0 and 2 more elements: light, dark
+    // LEVEL = 2: supreme state, access to all elements in LEVEL = 1 and 2 more elements: time, space
+    public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 2);
     protected MagicCreationStationBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(ACTIVE, false));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(LEVEL, 0));
     }
 
     @Nullable
@@ -40,7 +46,7 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit){
         if(!level.isClientSide){
-            level.setBlock(pos, state.cycle(ACTIVE), 3);
+            level.setBlock(pos, state.cycle(LEVEL), 3);
             // Open the GUI for spell creation
             NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
         }
@@ -54,6 +60,6 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ACTIVE);
+        builder.add(LEVEL);
     }
 }

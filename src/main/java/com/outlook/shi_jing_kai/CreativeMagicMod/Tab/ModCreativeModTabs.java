@@ -22,6 +22,7 @@ public class ModCreativeModTabs {
                     .displayItems((pParameters, pOutput) -> {
                         // register the blocks into the tab
                         pOutput.accept(ModBlock.MANA_CRYSTAL_ORE.get());
+                        pOutput.accept(ModBlock.MAGIC_CREATION_STATION.get());
 
                         // register the items into the tab
                         pOutput.accept(ModItem.MANA_CRYSTAL.get());
