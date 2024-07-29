@@ -12,6 +12,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -78,7 +79,16 @@ public class manaCommand {
                 System.out.println("Reset Complete! Current Player's mana phase: " + playerMana.getPhase());
                 CompoundTag curManaData = new CompoundTag();
                 playerMana.saveNBTData(curManaData);
-                PlayerDataStorage.savePlayerData(curPlayer.getUUID(), curManaData);
+                if(curPlayer.level() instanceof ServerLevel){
+                    ServerLevel curWorld = (ServerLevel) curPlayer.level();
+                    long worldID = curWorld.getSeed();
+                    String curWorldId = Long.toString(worldID);
+                    String playerID = curPlayer.getUUID().toString();
+                    String tupleID = playerID + ":" + curWorldId;
+                    PlayerDataStorage.savePlayerData(tupleID, curManaData);
+                    System.out.println("Saving into existing Server world");
+                }
+
                 player.sendSystemMessage(Component.literal("Reset Complete, please kill your current player to complete the MANA reset procedure!"));
             }
         }

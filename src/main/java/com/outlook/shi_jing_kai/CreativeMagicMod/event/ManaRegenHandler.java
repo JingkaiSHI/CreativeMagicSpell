@@ -5,6 +5,7 @@ import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,7 +41,14 @@ public class ManaRegenHandler {
                 mana.addMana(1);
                 CompoundTag updatedData = new CompoundTag();
                 mana.saveNBTData(updatedData);
-                PlayerDataStorage.savePlayerData(player.getUUID(), updatedData);
+                if(player.level() instanceof ServerLevel){
+                    ServerLevel curWorld = (ServerLevel) player.level();
+                    long worldID = curWorld.getSeed();
+                    String curWorldId = Long.toString(worldID);
+                    String playerID = player.getUUID().toString();
+                    String tupleID = playerID + ":" + curWorldId;
+                    PlayerDataStorage.savePlayerData(tupleID, updatedData);
+                }
             }
         }
 

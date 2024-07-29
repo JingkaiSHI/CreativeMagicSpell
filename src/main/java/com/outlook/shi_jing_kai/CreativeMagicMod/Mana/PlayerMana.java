@@ -1,8 +1,16 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.Mana;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 
 public class PlayerMana {
+
+    // Max Mana limit for phase = 0; max mana possible for a player to achieve in the overworld
+    public final int MAX_MANA_FINAL_OVERWORLD = 1000;
+    // Phase 2 - Nether
+    public final int MAX_MANA_FINAL_NETHER = 5000;
+    // Phase 3 - the End
+    public final int MAX_MANA_FINAL_END = 20000;
     private final int MIN_MANA = 0;
 
 
@@ -10,22 +18,14 @@ public class PlayerMana {
     // defines initial value of Mana for a player as a proportion of MAX_MANA_CURRENT
     private final double MANA_INITIAL = 0.4;
 
-    // set initial value of maximum mana
-
-
-    // max mana available to be increased to
-    // Phase 1 - Overworld
-    public final int MAX_MANA_FINAL_OVERWORLD = 1000;
-    // Phase 2 - Nether
-    public final int MAX_MANA_FINAL_NETHER = 5000;
-    // Phase 3 - the End
-    public final int MAX_MANA_FINAL_END = 20000;
-
     private int COOL_DOWN_TIMER = 5;
     private int MAX_MANA_FINAL_CURRENT = MAX_MANA_FINAL_OVERWORLD;
 
     private int MAX_MANA_CURRENT = 100;
+
+    // Key value, indicate current value of mana of the player
     private int mana;
+
     // phase indicate the phase in player's mana's logic:
     // phase = 0: overworld
     // phase = 1: nether
@@ -36,6 +36,8 @@ public class PlayerMana {
     public PlayerMana(){
         resetMana();
     }
+
+
 
     public void resetMana(){
         this.mana = (int) (MANA_INITIAL * MAX_MANA_CURRENT);

@@ -5,6 +5,7 @@ import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -33,7 +34,15 @@ public class ManaCrystal extends Item {
             CompoundTag updatedData = new CompoundTag();
             addition_status = currentPlayerMana.increaseMaxMana(100);
             currentPlayerMana.saveNBTData(updatedData);
-            PlayerDataStorage.savePlayerData(pPlayer.getUUID(), updatedData);
+            String curWorldId = "404";
+            if(pLevel instanceof ServerLevel){
+                ServerLevel curWorld = (ServerLevel) pLevel;
+                long worldID = curWorld.getSeed();
+                curWorldId = Long.toString(worldID);
+            }
+            String playerID = pPlayer.getUUID().toString();
+            String tupleID = playerID + ":" + curWorldId;
+            PlayerDataStorage.savePlayerData(tupleID, updatedData);
         }
         if(!pLevel.isClientSide){
             System.out.println("Server side execution");

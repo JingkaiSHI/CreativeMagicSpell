@@ -7,13 +7,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerDataStorage {
-    private static final Map<UUID, CompoundTag> playerDataMap = new HashMap<>();
+    private static final Map<String, CompoundTag> playerDataMap = new HashMap<>();
 
-    public static void savePlayerData(UUID playerID, CompoundTag data){
-        playerDataMap.put(playerID, data);
+    public static void savePlayerData(String IDTuple, CompoundTag data){
+        playerDataMap.put(IDTuple, data);
     }
 
-    public static CompoundTag loadPlayerData(UUID playerID){
-        return playerDataMap.get(playerID);
+    public static CompoundTag loadPlayerData(String IDTuple){
+        System.out.println("Loading Player Data with tuple ID: " + IDTuple);
+        return playerDataMap.get(IDTuple);
     }
 }
