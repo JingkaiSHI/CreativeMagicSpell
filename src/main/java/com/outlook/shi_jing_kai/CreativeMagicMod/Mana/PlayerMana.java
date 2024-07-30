@@ -113,10 +113,10 @@ public class PlayerMana {
     // Increase the max mana limit if it does not exceed the final max limit
     public int increaseMaxMana(int increase) {
         int status = 1;
-        this.MAX_MANA_CURRENT = Math.min(MAX_MANA_CURRENT + increase, MAX_MANA_FINAL_CURRENT);
         if(MAX_MANA_CURRENT + increase > MAX_MANA_FINAL_CURRENT){
             status = 0;
         }
+        this.MAX_MANA_CURRENT = Math.min(MAX_MANA_CURRENT + increase, MAX_MANA_FINAL_CURRENT);
         return status;
     }
 

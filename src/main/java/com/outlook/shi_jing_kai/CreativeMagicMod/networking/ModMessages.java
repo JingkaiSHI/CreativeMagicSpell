@@ -1,7 +1,10 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.networking;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.GiveManaC2SPacket;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaS2CPacket;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.UseManaC2SPacket;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -31,9 +34,21 @@ public class ModMessages {
                 .encoder(SyncManaS2CPacket::encode)
                 .consumerMainThread(SyncManaS2CPacket::handle)
                 .add();
+
+        INSTANCE.messageBuilder(UseManaC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(UseManaC2SPacket::decode)
+                .encoder(UseManaC2SPacket::encode)
+                .consumerMainThread(UseManaC2SPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(GiveManaC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(GiveManaC2SPacket::decode)
+                .encoder(GiveManaC2SPacket::encode)
+                .consumerMainThread(GiveManaC2SPacket::handle)
+                .add();
     }
 
-    public static <MSG> void sendToServer(MSG message) {
+    public static <MSG> void sendToServer(Object message, LocalPlayer player) {
         INSTANCE.sendToServer(message);
     }
 

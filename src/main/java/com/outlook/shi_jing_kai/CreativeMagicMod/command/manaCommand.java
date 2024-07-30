@@ -7,7 +7,10 @@ import com.outlook.shi_jing_kai.CreativeMagicMod.Client.PlayerDataStorage;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerMana;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Mana.PlayerManaProvider;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.ModMessages;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.GiveManaC2SPacket;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaS2CPacket;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.UseManaC2SPacket;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
@@ -26,20 +29,17 @@ public class manaCommand {
         dispatcher.register(Commands.literal("mana")
                 .then(Commands.literal("give").then(Commands.argument("amount", integer()).executes(manaCommand::giveMana)))
                 .then(Commands.literal("show").executes(manaCommand::showMana))
-                .then(Commands.literal("use").then(Commands.argument("amount", integer()).executes(manaCommand::useMana)))
-                .then(Commands.literal("reset").executes(manaCommand::resetMana)));
+                .then(Commands.literal("use").then(Commands.argument("amount", integer()).executes(manaCommand::useMana))));
     }
 
-    // give some amount of mana as specified by the command to the specified player
+
     private static int giveMana(CommandContext<CommandSourceStack> context){
-        if(context.getSource().getEntity() instanceof Player player){
+        if(context.getSource().getEntity() instanceof Player){
             int amount = getInteger(context, "amount");
             Player curPlayer = (Player) context.getSource().getEntity();
             PlayerMana cur_mana = curPlayer.getCapability(PlayerManaProvider.PLAYER_MANA).orElse(null);
-            if(cur_mana != null){
-                cur_mana.addMana(amount);
-                player.sendSystemMessage(Component.literal("Mana granted! Amount granted:"));
-                player.sendSystemMessage(Component.literal(String.valueOf(amount)));
+            if (cur_mana != null) {
+                sendGiveManaToServer((LocalPlayer) curPlayer, amount);
             }
         }
         return Command.SINGLE_SUCCESS;
@@ -62,39 +62,20 @@ public class manaCommand {
     }
 
     private static int useMana(CommandContext<CommandSourceStack> context){
-        return Command.SINGLE_SUCCESS;
-    }
-
-
-    private static int resetMana(CommandContext<CommandSourceStack> context){
         if(context.getSource().getEntity() instanceof Player player){
-            Player curPlayer = player;
-            PlayerMana playerMana = curPlayer.getCapability(PlayerManaProvider.PLAYER_MANA).orElse(null);
-            if(playerMana != null){
-                playerMana = new PlayerMana();
-                playerMana.setMaxMana(100);
-                playerMana.setPhase(0);
-                System.out.println("Reset Complete! Current Player's Max mana: " + playerMana.getMaxMana());
-                System.out.println("Reset Complete! Current Player's mana: " + playerMana.getMana());
-                System.out.println("Reset Complete! Current Player's mana phase: " + playerMana.getPhase());
-                CompoundTag curManaData = new CompoundTag();
-                playerMana.saveNBTData(curManaData);
-                if(curPlayer.level() instanceof ServerLevel){
-                    ServerLevel curWorld = (ServerLevel) curPlayer.level();
-                    long worldID = curWorld.getSeed();
-                    String curWorldId = Long.toString(worldID);
-                    String playerID = curPlayer.getUUID().toString();
-                    String tupleID = playerID + ":" + curWorldId;
-                    PlayerDataStorage.savePlayerData(tupleID, curManaData);
-                    System.out.println("Saving into existing Server world");
-                }
-
-                player.sendSystemMessage(Component.literal("Reset Complete, please kill your current player to complete the MANA reset procedure!"));
+            int amount = getInteger(context, "amount");
+            Player curPlayer = (Player) context.getSource().getEntity();
+            PlayerMana cur_mana = curPlayer.getCapability(PlayerManaProvider.PLAYER_MANA).orElse(null);
+            if (cur_mana != null) {
+                sendUseManaToServer((LocalPlayer) player, amount);
+                System.out.println("Mana Used! Used Amount: " + amount);
+                // syncManaDataWithClient(curPlayer);
             }
         }
-
         return Command.SINGLE_SUCCESS;
     }
+
+
 
     private static void syncManaDataWithClient(Player player){
         player.getCapability(PlayerManaProvider.PLAYER_MANA).ifPresent(mana -> {
@@ -103,5 +84,13 @@ public class manaCommand {
             System.out.println("syncing mana data with client: " + tag);
             ModMessages.sendToClient(new SyncManaS2CPacket(tag), (ServerPlayer) player);
         });
+    }
+
+    private static void sendUseManaToServer(LocalPlayer player, int manaUsed){
+        ModMessages.sendToServer(new UseManaC2SPacket(manaUsed), player);
+    }
+
+    private static void sendGiveManaToServer(LocalPlayer player, int manaGiven){
+        ModMessages.sendToServer(new GiveManaC2SPacket(manaGiven), player);
     }
 }
