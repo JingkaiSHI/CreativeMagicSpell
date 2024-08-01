@@ -12,7 +12,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -31,8 +33,8 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
     // LEVEL = 1: advanced state, access to all elements in LEVEL = 0 and 2 more elements: light, dark
     // LEVEL = 2: supreme state, access to all elements in LEVEL = 1 and 2 more elements: time, space
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 2);
-    protected MagicCreationStationBlock(Properties properties) {
-        super(properties);
+    public MagicCreationStationBlock() {
+        super(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK));
         this.registerDefaultState(this.getStateDefinition().any().setValue(LEVEL, 0));
     }
 
@@ -55,7 +57,7 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
-        return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 32.0D, 16.0D); // create 2-block tall
+        return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D); // create 2-block tall
     }
 
     @Override

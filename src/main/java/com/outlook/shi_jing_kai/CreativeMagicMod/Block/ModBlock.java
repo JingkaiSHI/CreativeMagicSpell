@@ -1,5 +1,6 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.Block;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.custom.MagicCreationStationBlock;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Item.ModItem;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -31,7 +32,7 @@ public class ModBlock {
                     .requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
     public static final RegistryObject<Block> MAGIC_CREATION_STATION = registerBlock("magic_creation_station",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK)));
+            () -> new MagicCreationStationBlock());
 
 
 
