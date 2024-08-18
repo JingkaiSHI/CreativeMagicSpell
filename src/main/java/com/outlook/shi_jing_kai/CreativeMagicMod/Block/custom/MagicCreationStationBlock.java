@@ -1,5 +1,6 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.Block.custom;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlockEntities;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,7 +40,7 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new MagicCreationStationBlockEntity(null, blockPos, blockState);
+        return new MagicCreationStationBlockEntity(ModBlockEntities.MAGIC_CREATION_STATION_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
 
@@ -69,5 +70,16 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
-    // what other methods do I need?
+
+    // properly handle the destruction of a block entity on block destruction
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving){
+        if(!state.is(newState.getBlock())){
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof MagicCreationStationBlockEntity){
+                level.removeBlockEntity(pos);
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
 }

@@ -32,7 +32,7 @@ public class ModBlock {
                     .requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
     public static final RegistryObject<Block> MAGIC_CREATION_STATION = registerBlock("magic_creation_station",
-            () -> new MagicCreationStationBlock());
+            MagicCreationStationBlock::new);
 
 
 

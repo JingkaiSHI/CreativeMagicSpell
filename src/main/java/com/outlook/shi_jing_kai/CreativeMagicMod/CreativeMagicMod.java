@@ -3,6 +3,7 @@ package com.outlook.shi_jing_kai.CreativeMagicMod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.logging.LogUtils;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlock;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlockEntities;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Item.ModItem;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Tab.ModCreativeModTabs;
 import com.outlook.shi_jing_kai.CreativeMagicMod.command.manaCommand;
@@ -38,6 +39,7 @@ public class CreativeMagicMod
 
 
         ModItem.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModBlock.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(new ModEvents());
