@@ -1,5 +1,7 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.screen;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -29,6 +31,20 @@ public class SpellCreationCanvas extends Screen {
                 .pos(this.width/2 - 100, this.height/2 - 100)
                 .size(200, 20)
                 .build());
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        // Render a half-transparent black background
+        renderTransparentBackground(guiGraphics);
+
+        // Render other elements like buttons
+        super.render(guiGraphics, mouseX, mouseY, delta);
+    }
+
+    private void renderTransparentBackground(GuiGraphics guiGraphics) {
+        // Use fill to draw a half-transparent black rectangle
+        guiGraphics.fill(0, 0, this.width, this.height, 0x80000000); // 50% transparent black (0x80 is the alpha channel)
     }
 
 

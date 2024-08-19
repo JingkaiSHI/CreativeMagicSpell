@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -46,6 +47,10 @@ public class CreativeMagicMod
 
     }
 
+    private void doClientStuff(final FMLClientSetupEvent event){
+
+    }
+
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event){
         ModMessages.registerPackets();
@@ -63,6 +68,12 @@ public class CreativeMagicMod
 
         private static void register(CommandDispatcher<CommandSourceStack> dispatcher){
             dispatcher.register(Commands.literal(CreativeMagicMod.MOD_ID));
+        }
+    }
+
+    public class ClientSetup{
+        public static void onClientSetup(FMLClientSetupEvent event){
+
         }
     }
 }
