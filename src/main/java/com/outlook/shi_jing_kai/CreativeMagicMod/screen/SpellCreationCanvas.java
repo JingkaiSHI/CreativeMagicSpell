@@ -12,7 +12,7 @@ public class SpellCreationCanvas extends Screen {
     private int[][] canvasState = new int[canvasSize][canvasSize];
     private CanvasRenderer canvasRenderer;
     private SpellPredictor spellPredictor;
-    protected SpellCreationCanvas() {
+    public SpellCreationCanvas() {
         super(Component.literal("Spell Creation Canvas"));
         // initialize other components
     }

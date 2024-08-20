@@ -2,11 +2,14 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.Block.custom;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlockEntities;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
+import com.outlook.shi_jing_kai.CreativeMagicMod.screen.SpellCreationCanvas;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,6 +25,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,11 +53,16 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit){
         if(!level.isClientSide){
-            level.setBlock(pos, state.cycle(LEVEL), 3);
-            // Open the GUI for spell creation
-            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
+            return InteractionResult.SUCCESS;
+        } else {
+            openSpellCreationScreen();
+            return InteractionResult.sidedSuccess(true);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void openSpellCreationScreen(){
+        Minecraft.getInstance().setScreen(new SpellCreationCanvas());
     }
 
     @Override
