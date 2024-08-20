@@ -2,14 +2,11 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.Block.custom;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.ModBlockEntities;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
-import com.outlook.shi_jing_kai.CreativeMagicMod.screen.SpellCreationCanvas;
+import com.outlook.shi_jing_kai.CreativeMagicMod.screen.SpellCreationScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,7 +24,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class MagicCreationStationBlock extends BaseEntityBlock {
@@ -62,7 +58,7 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
 
     @OnlyIn(Dist.CLIENT)
     private void openSpellCreationScreen(){
-        Minecraft.getInstance().setScreen(new SpellCreationCanvas());
+        Minecraft.getInstance().setScreen(new SpellCreationScreen());
     }
 
     @Override
