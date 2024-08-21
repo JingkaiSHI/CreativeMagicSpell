@@ -179,7 +179,13 @@ dependencies {
 
 
     // other dependency:
-    implementation 'org.tensorflow:tensorflow-lite:2.10.0'
+    // https://mvnrepository.com/artifact/org.tensorflow/tensorflow-lite
+    implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-M1.1'
+    implementation 'org.nd4j:nd4j-native-platform:1.0.0-M1.1'
+    implementation 'org.datavec:datavec-api:1.0.0-M1.1'
+    implementation 'org.datavec:datavec-data-image:1.0.0-M1.1'
+    implementation 'org.nd4j:nd4j-native:1.0.0-M1.1'
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
