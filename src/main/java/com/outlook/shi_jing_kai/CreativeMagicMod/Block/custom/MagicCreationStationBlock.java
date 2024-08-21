@@ -51,14 +51,14 @@ public class MagicCreationStationBlock extends BaseEntityBlock {
         if(!level.isClientSide){
             return InteractionResult.SUCCESS;
         } else {
-            openSpellCreationScreen();
+            openSpellCreationScreen((MagicCreationStationBlockEntity) level.getBlockEntity(pos));
             return InteractionResult.sidedSuccess(true);
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    private void openSpellCreationScreen(){
-        Minecraft.getInstance().setScreen(new SpellCreationScreen());
+    private void openSpellCreationScreen(MagicCreationStationBlockEntity blockEntity){
+        Minecraft.getInstance().setScreen(new SpellCreationScreen(blockEntity));
     }
 
     @Override

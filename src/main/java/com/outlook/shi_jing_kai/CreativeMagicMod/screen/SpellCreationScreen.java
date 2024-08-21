@@ -1,5 +1,6 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.screen;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -10,24 +11,31 @@ public class SpellCreationScreen extends Screen {
     private int[][] canvasState = new int[canvasSize][canvasSize];
     private CanvasRenderer canvasRenderer;
     private SpellPredictor spellPredictor;
-    public SpellCreationScreen() {
+
+    private MagicCreationStationBlockEntity blockEntity;
+    public SpellCreationScreen(MagicCreationStationBlockEntity blockEntity) {
         super(Component.literal("Spell Creation Canvas"));
         // initialize other components
+        this.blockEntity = blockEntity;
     }
 
     @Override
     protected void init(){
         this.addRenderableWidget(Button.builder(Component.literal("Save Spell"), button -> saveSpell())
                 .pos(this.width - 100, this.height/2 - 40)
-                .size(50, 20)
+                .size(80, 20)
                 .build());
         this.addRenderableWidget(Button.builder(Component.literal("Discard Spell"), button -> discardSpell())
                 .pos(this.width - 100, this.height/2 - 70)
-                .size(50, 20)
+                .size(80, 20)
                 .build());
         this.addRenderableWidget(Button.builder(Component.literal("Reset Canvas"), button -> resetCanvas())
                 .pos(this.width - 100, this.height/2 - 100)
-                .size(50, 20)
+                .size(80, 20)
+                .build());
+        this.addRenderableWidget(Button.builder(Component.literal("Confirm Stroke"), button -> confirmStroke())
+                .pos(this.width - 100, this.height/2 - 10)
+                .size(80, 20)
                 .build());
     }
 
@@ -85,7 +93,9 @@ public class SpellCreationScreen extends Screen {
     }
 
 
+    private void confirmStroke(){
 
+    }
 
 
     @Override
