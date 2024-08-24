@@ -1,0 +1,31 @@
+[24Aug2024 10:50:20.944] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Number of classes detected: 16
+[24Aug2024 10:50:20.947] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: ACCELERATE batch.png
+[24Aug2024 10:50:26.464] [main/INFO] [org.nd4j.linalg.factory.Nd4jBackend/]: Loaded [CpuBackend] backend
+[24Aug2024 10:50:27.519] [main/INFO] [org.nd4j.nativeblas.NativeOpsHolder/]: Number of threads used for linear algebra: 14
+[24Aug2024 10:50:27.520] [main/INFO] [org.nd4j.linalg.cpu.nativecpu.CpuNDArrayFactory/]: Binary level Generic x86 optimization level AVX/AVX2
+[24Aug2024 10:50:27.583] [main/INFO] [org.nd4j.nativeblas.Nd4jBlas/]: Number of threads used for OpenMP BLAS: 14
+[24Aug2024 10:50:27.619] [main/INFO] [org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner/]: Backend used: [CPU]; OS: [Windows 11]
+[24Aug2024 10:50:27.620] [main/INFO] [org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner/]: Cores: [20]; Memory: [3.9GB];
+[24Aug2024 10:50:27.620] [main/INFO] [org.nd4j.linalg.api.ops.executioner.DefaultOpExecutioner/]: Blas vendor: [OPENBLAS]
+[24Aug2024 10:50:27.623] [main/INFO] [org.nd4j.linalg.cpu.nativecpu.CpuBackend/]: Backend build information:
+ GCC: "10.3.0"
+STD version: 201103L
+DEFAULT_ENGINE: samediff::ENGINE_CPU
+HAVE_FLATBUFFERS
+HAVE_OPENBLAS
+[24Aug2024 10:50:27.727] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: CONFUSE batch.png
+[24Aug2024 10:50:27.738] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: CONSTRAINT batch.png
+[24Aug2024 10:50:27.745] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: EMIT batch.png
+[24Aug2024 10:50:27.750] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: ENHANCE batch.png
+[24Aug2024 10:50:27.754] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: ERASE batch.png
+[24Aug2024 10:50:27.757] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_BOOTS batch.png
+[24Aug2024 10:50:27.761] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_CHESTPLATE batch.png
+[24Aug2024 10:50:27.765] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_HELMET batch.png
+[24Aug2024 10:50:27.768] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_LEGGING batch.png
+[24Aug2024 10:50:27.770] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_SHIELD batch.png
+[24Aug2024 10:50:27.774] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: FORM_SWORD_batch.png
+[24Aug2024 10:50:27.777] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: REALITY_MARBLE batch.png
+[24Aug2024 10:50:27.781] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: SLOW batch.png
+[24Aug2024 10:50:27.784] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: STOP batch.png
+[24Aug2024 10:50:27.786] [main/INFO] [com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.DataPreprocessor/]: Processing image file: WALL batch.png
+[24Aug2024 10:51:10.922] [main/INFO] [org.deeplearning4j.nn.multilayer.MultiLayerNetwork/]: Starting MultiLayerNetwork with WorkspaceModes set to [training: ENABLED; inference: ENABLED], cacheMode set to [NONE]

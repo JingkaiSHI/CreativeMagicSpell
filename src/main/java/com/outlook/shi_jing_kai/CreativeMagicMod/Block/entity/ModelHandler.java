@@ -8,23 +8,24 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.conf.layers.SubsamplingLayer;
 import org.deeplearning4j.nn.conf.layers.DenseLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
-import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.nd4j.linalg.dataset.DataSet;
-import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.dataset.api.iterator.KFoldIterator;
+import org.deeplearning4j.eval.Evaluation;
+import org.deeplearning4j.util.ModelSerializer;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.deeplearning4j.util.ModelSerializer;
-import java.io.File;
 
 public class ModelHandler {
 
     public MultiLayerNetwork createModel() {
+        // The input shape is [1, 16, 16], which corresponds to [channels, height, width]
         NeuralNetConfiguration.ListBuilder listBuilder = new NeuralNetConfiguration.Builder()
                 .seed(12345)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
@@ -33,9 +34,9 @@ public class ModelHandler {
                 .list();
 
         listBuilder.layer(0, new ConvolutionLayer.Builder(3, 3)
-                .nIn(1)
+                .nIn(1)  // Input channels: 1 for grayscale
                 .stride(1, 1)
-                .nOut(64)
+                .nOut(64)  // Number of filters
                 .weightInit(WeightInit.XAVIER)
                 .activation(Activation.RELU)
                 .build());
@@ -68,7 +69,7 @@ public class ModelHandler {
                 .nOut(128).build());
 
         listBuilder.layer(7, new OutputLayer.Builder(LossFunctions.LossFunction.SPARSE_MCXENT)
-                .nOut(16)
+                .nOut(16)  // Number of output classes
                 .activation(Activation.SOFTMAX)
                 .build());
 
@@ -78,17 +79,19 @@ public class ModelHandler {
         return model;
     }
 
-
-    public List<Double> crossValidateModel(DataSetIterator dataIter, int numFolds) {
+    public List<Double> crossValidateModel(DataSet dataSet, int numFolds) {
         List<Double> foldAccuracies = new ArrayList<>();
-        KFoldIterator kFoldIterator = new KFoldIterator(numFolds, (DataSet) dataIter);
+        KFoldIterator kFoldIterator = new KFoldIterator(numFolds, dataSet);
 
-        while(kFoldIterator.hasNext()) {
+        while (kFoldIterator.hasNext()) {
             DataSet fold = kFoldIterator.next();
             MultiLayerNetwork model = createModel();
             model.fit(fold);
 
-            double accuracy = model.evaluate((DataSetIterator) fold).accuracy();
+            // Evaluate dataset on the fold
+            Evaluation eval = new Evaluation(16);
+            eval.eval(fold.getLabels(), model.output(fold.getFeatures()));
+            double accuracy = eval.accuracy();
             foldAccuracies.add(accuracy);
         }
 
@@ -101,20 +104,29 @@ public class ModelHandler {
     }
 
     public static void main(String[] args) throws Exception {
-        File datasetDir = new File("C:\\Users\\shi_j\\Desktop\\CreativeMagicMod\\src\\main\\java\\com\\outlook\\shi_jing_kai\\CreativeMagicMod\\Block\\entity\\model");
+        File datasetDir = new File("C:\\Users\\shi_j\\Desktop\\CreativeMagicMod\\src\\main\\java\\com\\outlook\\shi_jing_kai\\CreativeMagicMod\\Block\\entity\\dataset");
         DataPreprocessor dataPreprocessor = new DataPreprocessor();
-        DataSetIterator dataIter = dataPreprocessor.loadData(datasetDir);
+        DataSet dataSet = dataPreprocessor.loadDataAsDataSet(datasetDir);
+
+
 
         ModelHandler modelHandler = new ModelHandler();
 
-        List<Double> accuracies = modelHandler.crossValidateModel(dataIter, 8);
+        List<Double> accuracies = modelHandler.crossValidateModel(dataSet, 8);
         System.out.println("Cross-validation accuracies: " + accuracies);
         System.out.println("Mean accuracy: " + accuracies.stream().mapToDouble(a -> a).average().orElse(0.0));
 
         MultiLayerNetwork model = modelHandler.createModel();
-        model.fit(dataIter);
+        model.fit(dataSet);
         modelHandler.saveModel(model, "rune_eyes.zip");
     }
 
+    public void visualizeDataSet(DataSet dataSet){
+        List list = dataSet.asList();
+        for(int i = 0; i < list.size(); i++){
+            // handel each input
 
+        }
+    }
 }
+
