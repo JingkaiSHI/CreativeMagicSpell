@@ -1,16 +1,14 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity;
 
-import org.datavec.image.loader.NativeImageLoader;
-import org.nd4j.linalg.dataset.DataSet;
-import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 import org.nd4j.linalg.api.ndarray.INDArray;
+
+import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.indexing.NDArrayIndex;
 import org.nd4j.linalg.factory.Nd4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +66,8 @@ public class DataPreprocessor {
                 // Process each 16x16 block in the image
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
-                        // Extract the 16x16 block
-                        INDArray block = Nd4j.zeros(1, BLOCK_SIZE, BLOCK_SIZE, CHANNELS);
+                        // Extract the 16x16 block and reshape it to [1, 1, 16, 16]
+                        INDArray block = Nd4j.zeros(1, 1, BLOCK_SIZE, BLOCK_SIZE);
 
                         for (int x = 0; x < BLOCK_SIZE; x++) {
                             for (int y = 0; y < BLOCK_SIZE; y++) {
@@ -77,7 +75,7 @@ public class DataPreprocessor {
 
                                 // Extract the color component and apply the binary rule
                                 if ((pixel & 0xFFFFFF) == 0xFFFFFF) {  // If the pixel is pure white
-                                    block.putScalar(0, x, y, 0, 1);
+                                    block.putScalar(0, 0, x, y, 1);
                                 }
                             }
                         }
@@ -98,11 +96,6 @@ public class DataPreprocessor {
 
         // Merge all datasets into a single DataSet
         DataSet fullDataSet = DataSet.merge(dataSetList);
-
-        for (DataSet dataSet : dataSetList) {
-            INDArray input = dataSet.getFeatures();
-            System.out.println("Input Shape: " + java.util.Arrays.toString(input.shape()));
-        }
 
         return fullDataSet;
     }
