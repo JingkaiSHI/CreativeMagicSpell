@@ -1,5 +1,7 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.screen;
 
+import ai.onnxruntime.OrtEnvironment;
+import ai.onnxruntime.OrtSession;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -77,10 +79,23 @@ public class SpellCreationScreen extends Screen {
 
 
     private void saveSpell(){
+        // read the current canvas into a 16 by 16 float tensor to pass into
+        try (
+                OrtEnvironment environment = OrtEnvironment.getEnvironment();
+                OrtSession session = environment.createSession("src/main/java/com/outlook/shi_jing_kai/CreativeMagicMod/Block/entity/model_official/rune_classifier.onnx")){
+            // load the current canvas into 1 by 1 by 16 by 16 tensor to pass it into the onnx model
+            System.out.println("spell predicted with session successfully created");
 
+        } catch(Exception e){
+            // use this as error handling for now
+            e.printStackTrace();
+            System.out.println("Failed in saving spell");
+        }
+        System.out.println("spell rune saved successfully.");
     }
 
     private void discardSpell(){
+        // empty the canvas
 
     }
 

@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 version = mod_version
@@ -152,6 +153,7 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    mavenCentral()
 }
 
 dependencies {
@@ -180,11 +182,7 @@ dependencies {
 
     // other dependency:
     // https://mvnrepository.com/artifact/org.tensorflow/tensorflow-lite
-    implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-M1.1'
-    implementation 'org.nd4j:nd4j-native-platform:1.0.0-M1.1'
-    implementation 'org.datavec:datavec-api:1.0.0-M1.1'
-    implementation 'org.datavec:datavec-data-image:1.0.0-M1.1'
-    implementation 'org.nd4j:nd4j-native:1.0.0-M1.1'
+    implementation fg.deobf("com.microsoft.onnxruntime:onnxruntime:1.16.0")
 
 }
 
