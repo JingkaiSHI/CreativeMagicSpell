@@ -1,24 +1,47 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.screen;
 
-import ai.onnxruntime.OrtEnvironment;
-import ai.onnxruntime.OrtSession;
+
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.RuneClassifier;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.data.MagicSpell;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.data.Effects;
+import org.jetbrains.annotations.NotNull;
+
 
 public class SpellCreationScreen extends Screen {
+    public static Effects[] EFFECTS = new Effects[16];
     private final int canvasSize = 16;
-    private int[][] canvasState = new int[canvasSize][canvasSize];
+    private final int[][] canvasState = new int[canvasSize][canvasSize];
     private CanvasRenderer canvasRenderer;
     private SpellPredictor spellPredictor;
+    private MagicSpell createdSpell = new MagicSpell();
 
-    private MagicCreationStationBlockEntity blockEntity;
+    static {
+        EFFECTS[0] = Effects.ACCELERATE;
+        EFFECTS[1] = Effects.CONFUSE;
+        EFFECTS[2] = Effects.CONSTRAINT;
+        EFFECTS[3] = Effects.EMIT;
+        EFFECTS[4] = Effects.ENHANCE;
+        EFFECTS[5] = Effects.ERASE;
+        EFFECTS[6] = Effects.FORM_BOOTS;
+        EFFECTS[7] = Effects.FORM_CHESTPLATE;
+        EFFECTS[8] = Effects.FORM_HELMET;
+        EFFECTS[9] = Effects.FORM_LEGGING;
+        EFFECTS[10] = Effects.FORM_SHIELD;
+        EFFECTS[11] = Effects.FORM_SWORD;
+        EFFECTS[12] = Effects.REALITY_MARBLE;
+        EFFECTS[13] = Effects.SLOW;
+        EFFECTS[14] = Effects.STOP;
+        EFFECTS[15] = Effects.WALL;
+    }
+
     public SpellCreationScreen(MagicCreationStationBlockEntity blockEntity) {
         super(Component.literal("Spell Creation Canvas"));
         // initialize other components
-        this.blockEntity = blockEntity;
     }
 
     @Override
@@ -42,7 +65,7 @@ public class SpellCreationScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         // Render a half-transparent black background
         renderTransparentBackground(guiGraphics);
 
@@ -79,19 +102,7 @@ public class SpellCreationScreen extends Screen {
 
 
     private void saveSpell(){
-        // read the current canvas into a 16 by 16 float tensor to pass into
-        try (
-                OrtEnvironment environment = OrtEnvironment.getEnvironment();
-                OrtSession session = environment.createSession("src/main/java/com/outlook/shi_jing_kai/CreativeMagicMod/Block/entity/model_official/rune_classifier.onnx")){
-            // load the current canvas into 1 by 1 by 16 by 16 tensor to pass it into the onnx model
-            System.out.println("spell predicted with session successfully created");
 
-        } catch(Exception e){
-            // use this as error handling for now
-            e.printStackTrace();
-            System.out.println("Failed in saving spell");
-        }
-        System.out.println("spell rune saved successfully.");
     }
 
     private void discardSpell(){
@@ -109,7 +120,23 @@ public class SpellCreationScreen extends Screen {
 
 
     private void confirmStroke(){
+        Effects effect;
+        try {
+            float[][][][] tensor = RuneClassifier.canvasToTensor(canvasState);
+            int runeClass = RuneClassifier.classifyRune(tensor);
 
+            if (runeClass >= 0) {
+                // assign rune class number to the effect
+                effect = EFFECTS[runeClass];
+                System.out.println("Rune classified as class " + effect);
+            } else {
+                System.out.println("Failed to classify rune");
+            }
+        } catch (Exception e) {
+            System.out.println("Failed in saving spell: " + e.getMessage());
+        }
+
+        // we have the effect we need, add it to existing spell
     }
 
 
@@ -145,5 +172,13 @@ public class SpellCreationScreen extends Screen {
                 canvasState[row][col] = 0; // Reset all cells to 0
             }
         }
+    }
+
+    public MagicSpell getCreatedSpell() {
+        return createdSpell;
+    }
+
+    public void setCreatedSpell(MagicSpell createdSpell) {
+        this.createdSpell = createdSpell;
     }
 }

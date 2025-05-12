@@ -1,5 +1,6 @@
 package com.outlook.shi_jing_kai.CreativeMagicMod.event;
 
+import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.RuneClassifier;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Client.PlayerDataStorage;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Client.hud.ManaHudElement;
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
@@ -13,11 +14,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -82,6 +84,20 @@ public class ModEvents {
             System.out.println(mana.getPhase());
         });
         syncManaDataWithClient(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        RuneClassifier.initialize();
+    }
+
+    @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent event) {
+        try {
+            RuneClassifier.shutdown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

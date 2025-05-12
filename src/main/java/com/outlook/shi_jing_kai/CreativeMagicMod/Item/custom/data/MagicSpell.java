@@ -10,6 +10,10 @@ import java.util.List;
 public class MagicSpell {
     private List<SpellTouch> components = new ArrayList<>();
 
+    public MagicSpell(){
+        this.components = new ArrayList<>();
+    }
+
     public MagicSpell(List<SpellTouch> components){
         this.components = components;
     }
