@@ -3,7 +3,9 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.screen;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.MagicCreationStationBlockEntity;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Block.entity.RuneClassifier;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.data.ElementalTouch.DarkSpellTouch;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.data.MagicSpell;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.data.SpellTouch;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpellCreationScreen extends Screen {
     public static Effects[] EFFECTS = new Effects[16];
+    public static SpellTouch[] SPELL_TOUCHES = new SpellTouch[11];
     private final int canvasSize = 16;
     private final int[][] canvasState = new int[canvasSize][canvasSize];
     private CanvasRenderer canvasRenderer;
