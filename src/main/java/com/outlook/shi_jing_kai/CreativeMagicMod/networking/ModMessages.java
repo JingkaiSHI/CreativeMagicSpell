@@ -2,6 +2,8 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.networking;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.GiveManaC2SPacket;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.DiscardSpellBookC2SPacket;
+import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SaveSpellBookC2SPacket;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.SyncManaS2CPacket;
 import com.outlook.shi_jing_kai.CreativeMagicMod.networking.packet.UseManaC2SPacket;
 import net.minecraft.client.player.LocalPlayer;
@@ -45,6 +47,18 @@ public class ModMessages {
                 .decoder(GiveManaC2SPacket::decode)
                 .encoder(GiveManaC2SPacket::encode)
                 .consumerMainThread(GiveManaC2SPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(SaveSpellBookC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(SaveSpellBookC2SPacket::decode)
+                .encoder(SaveSpellBookC2SPacket::encode)
+                .consumerMainThread(SaveSpellBookC2SPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(DiscardSpellBookC2SPacket.class, id++, NetworkDirection.PLAY_TO_SERVER)
+                .decoder(DiscardSpellBookC2SPacket::decode)
+                .encoder(DiscardSpellBookC2SPacket::encode)
+                .consumerMainThread(DiscardSpellBookC2SPacket::handle)
                 .add();
     }
 

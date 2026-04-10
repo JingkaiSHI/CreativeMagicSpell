@@ -2,6 +2,7 @@ package com.outlook.shi_jing_kai.CreativeMagicMod.Item;
 
 import com.outlook.shi_jing_kai.CreativeMagicMod.CreativeMagicMod;
 import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.ManaCrystal;
+import com.outlook.shi_jing_kai.CreativeMagicMod.Item.custom.SpellBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -20,6 +21,7 @@ public class ModItem {
 
 
     // location to define custom items - ending
+    public static final RegistryObject<Item> SPELL_BOOK = ITEMS.register("spell_book", () -> new SpellBookItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> MANA_CRYSTAL = ITEMS.register("mana_crystal", () -> new ManaCrystal(new Item.Properties()));
 
     // register ITEMS using deferred register

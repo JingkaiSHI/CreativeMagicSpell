@@ -25,6 +25,7 @@ public class ModCreativeModTabs {
                         pOutput.accept(ModBlock.MAGIC_CREATION_STATION.get());
 
                         // register the items into the tab
+                        pOutput.accept(ModItem.SPELL_BOOK.get());
                         pOutput.accept(ModItem.MANA_CRYSTAL.get());
 
                     })
